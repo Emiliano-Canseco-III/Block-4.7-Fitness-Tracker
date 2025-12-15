@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API;
+const API = "https://fitnesstrac-kr.herokuapp.com/api";
 
 /** Fetches an array of activities from the API. */
 export async function getActivities() {
@@ -41,7 +41,7 @@ export async function deleteActivity(token, activityId) {
     throw Error("You must be signed in to delete an activity.");
   }
 
-  const response = await fetch(API + "/activities/" + activityId, {
+  const response = await fetch(API + "/activities", {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -50,7 +50,13 @@ export async function deleteActivity(token, activityId) {
   });
 
   if (!response.ok) {
-    const result = await response.json();
-    throw Error(result.message);
+    let errorMessage = response.statusText || "An unknown error occurred.";
+    try {
+      const result = await response.json();
+      if (result && result.message) {
+        errorMessage = result.message;
+      }
+    } catch (e) {}
+    throw Error(errorMessage);
   }
 }
