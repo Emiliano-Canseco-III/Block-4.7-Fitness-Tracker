@@ -19,7 +19,8 @@ export default function ActivitiesPage() {
   return (
     <>
       <h1>Activities</h1>
-      <ActivityList activities={activities} />
+      {/* Pass syncActivities down to ActivityList */}
+      <ActivityList activities={activities} syncActivities={syncActivities} />
       <ActivityForm syncActivities={syncActivities} />
     </>
   );
