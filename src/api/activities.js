@@ -41,7 +41,7 @@ export async function deleteActivity(token, activityId) {
     throw Error("You must be signed in to delete an activity.");
   }
 
-  const response = await fetch(API + "/activities", {
+  const response = await fetch(API + "/activities/" + activityId, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
